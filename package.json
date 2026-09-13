@@ -1,6 +1,6 @@
 {
   "name": "krabeui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A personal, versioned React component library built on shadcn/ui and Radix primitives.",
   "license": "MIT",
   "type": "module",
@@ -66,12 +66,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsup && node scripts/postbuild.mjs",
+    "prepare": "npm run build",
     "preview": "vite preview",
     "lint": "oxlint",
     "typecheck": "tsc -b --noEmit",
     "changeset": "changeset",
-    "version": "changeset version",
-    "release": "npm run build && changeset publish"
+    "version": "changeset version"
   },
   "peerDependencies": {
     "react": "^18.3.0 || ^19.0.0",
@@ -88,6 +88,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.5.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
