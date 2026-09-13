@@ -22,5 +22,6 @@
     "src/index.ts",
     "src/components/ui/**/*.tsx",
     "src/lib/**/*.ts"
-  ]
+  ],
+  "exclude": ["**/*.stories.tsx"]
 }

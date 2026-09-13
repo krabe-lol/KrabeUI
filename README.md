@@ -84,7 +84,8 @@ Values can be any valid CSS color — the default theme uses `oklch()`, but `hsl
 2. Add the entry to `src/index.ts` and to `tsup.config.ts`'s `entry` map.
 3. Add the matching subpath to `package.json`'s `exports`.
 4. `npm run build` to confirm it compiles; `npm run dev` to eyeball it in `src/App.tsx` (the playground).
-5. `npm run changeset` to record the change, then follow the release steps below.
+5. Add `src/components/ui/<component>.stories.tsx` covering its variants/states, and check it in `npm run storybook`.
+6. `npm run changeset` to record the change, then follow the release steps below.
 
 ## Releasing a new version
 
@@ -106,3 +107,20 @@ npm run dev      # Vite playground at src/App.tsx, exercises every component
 npm run build    # tsup -> dist/ (ESM + .d.ts per component) + dist/styles.css
 npm run typecheck
 ```
+
+## Storybook
+
+```bash
+npm run storybook         # dev server at http://localhost:6006
+npm run build-storybook   # static export to storybook-static/
+```
+
+Every component has a story at `src/components/ui/<name>.stories.tsx`, covering its meaningful variants/states (sizes, disabled, invalid, open popovers, etc). Storybook reuses the project's own `vite.config.ts` (so the same `@tailwindcss/vite` pipeline compiles the stories) and imports `src/index.css` once in `.storybook/preview.tsx`.
+
+The toolbar has four controls for checking the theming contract without a second real project:
+
+- **Theme preset** — KrabeUI default, or the actual token values from Brettchen / Racehub / Lagerist (see "Theming" above), or "Custom override".
+- **Scheme** — light / dark (`.dark` class, same as consumers use).
+- **Accent** / **Radius** — only apply when the preset is "Custom override"; pick any accent hue and any radius independently.
+
+This is implemented as a single global decorator in `.storybook/preview.tsx` that reads `context.globals` and sets the corresponding `--primary`/`--radius`/etc. custom properties as inline styles on the story's wrapper `div` — the same mechanism a consuming project's `globals.css` override uses, just applied live instead of at build time.
