@@ -6,7 +6,10 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+# --ignore-scripts: skip the `prepare` lifecycle script (tsup build of dist/) —
+# it needs src/, which isn't copied in yet, and build-storybook below doesn't
+# need dist/ anyway (Storybook builds straight from src/ via vite).
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build-storybook
 
