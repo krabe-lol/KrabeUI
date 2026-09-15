@@ -1,0 +1,33 @@
+# Deployment stack for the KrabeUI Storybook showcase container, published
+# to the Gitea registry at git.krabe.lol/krabe-lol/krabeui:latest by
+# .gitea/workflows/build-and-push-docker.yml.
+#
+# Meant to be pasted into a Portainer "Stack" (Web editor / repository
+# deploy). Works for both a plain Docker host and a Swarm cluster.
+#
+# One-time setup on the deploy host:
+#   - Docker must be logged in to git.krabe.lol so it can pull the (private)
+#     image — same registry token as the build workflow's REGISTRY_PASSWORD:
+#       docker login git.krabe.lol -u krabe.lol
+#     In Portainer this is done once under Registries, then selected when
+#     creating the stack.
+
+services:
+  krabeui-storybook:
+    image: git.krabe.lol/krabe-lol/krabeui:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    # Uncomment to have Portainer/Watchtower re-pull `latest` on every deploy
+    # instead of reusing whatever was last pulled:
+    # pull_policy: always
+
+    # Example Traefik labels, if this host is fronted by Traefik — adjust the
+    # router rule/entrypoint to match your setup, otherwise leave commented
+    # out and just use the port mapping above directly.
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.krabeui.rule=Host(`krabeui.krabe.lol`)"
+    #   - "traefik.http.routers.krabeui.entrypoints=websecure"
+    #   - "traefik.http.routers.krabeui.tls.certresolver=letsencrypt"
+    #   - "traefik.http.services.krabeui.loadbalancer.server.port=80"
