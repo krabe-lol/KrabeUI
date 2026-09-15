@@ -1,101 +1,86 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./select"
+import type { ComponentProps } from "react"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./select"
 
-const meta = {
+type SelectPlaygroundArgs = ComponentProps<typeof Select> & {
+  triggerSize?: "default" | "sm"
+}
+
+const meta: Meta<SelectPlaygroundArgs> = {
   title: "Components/Select",
   component: Select,
-} satisfies Meta<typeof Select>
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A dropdown for choosing one value from a list, built on Radix `Select`.",
+          "```tsx",
+          'import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "krabeui/select"',
+          "```",
+        ].join("\n"),
+      },
+    },
+  },
+  argTypes: {
+    disabled: { control: "boolean" },
+    triggerSize: {
+      control: "select",
+      options: ["default", "sm"],
+      description: "Preview SelectTrigger's size prop (not a real Select prop).",
+    },
+  },
+  args: {
+    disabled: false,
+    triggerSize: "default",
+  },
+}
 
 export default meta
+
 type Story = StoryObj<typeof meta>
 
 const frameworks = ["React", "Vue", "Svelte", "Solid"]
 
 export const Default: Story = {
-  render: () => (
-    <Select>
-      <SelectTrigger className="w-48">
-        <SelectValue placeholder="Pick a framework" />
-      </SelectTrigger>
-      <SelectContent>
-        {frameworks.map((f) => (
-          <SelectItem key={f} value={f.toLowerCase()}>
-            {f}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  ),
-}
-
-export const WithDefaultValue: Story = {
-  render: () => (
-    <Select defaultValue="react">
-      <SelectTrigger className="w-48">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {frameworks.map((f) => (
-          <SelectItem key={f} value={f.toLowerCase()}>
-            {f}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  ),
-}
-
-export const SmallSize: Story = {
-  render: () => (
-    <Select defaultValue="react">
-      <SelectTrigger size="sm" className="w-48">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {frameworks.map((f) => (
-          <SelectItem key={f} value={f.toLowerCase()}>
-            {f}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  ),
-}
-
-export const Disabled: Story = {
-  render: () => (
-    <Select disabled defaultValue="react">
-      <SelectTrigger className="w-48">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {frameworks.map((f) => (
-          <SelectItem key={f} value={f.toLowerCase()}>
-            {f}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  ),
-}
-
-export const WithGroups: Story = {
-  render: () => (
-    <Select defaultOpen>
-      <SelectTrigger className="w-48">
-        <SelectValue placeholder="Pick a timezone" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Americas</SelectLabel>
-          <SelectItem value="pst">Pacific (PST)</SelectItem>
-          <SelectItem value="est">Eastern (EST)</SelectItem>
-        </SelectGroup>
-        <SelectGroup>
-          <SelectLabel>Europe</SelectLabel>
-          <SelectItem value="cet">Central European (CET)</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+  render: ({ triggerSize, ...args }) => (
+    <>
+      <Select {...args}>
+        <SelectTrigger size={triggerSize} className="w-48">
+          <SelectValue placeholder="Pick a framework" />
+        </SelectTrigger>
+        <SelectContent>
+          {frameworks.map((f) => (
+            <SelectItem key={f} value={f.toLowerCase()}>
+              {f}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select defaultOpen>
+        <SelectTrigger className="w-48 mt-8">
+          <SelectValue placeholder="Pick a timezone" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Americas</SelectLabel>
+            <SelectItem value="pst">Pacific (PST)</SelectItem>
+            <SelectItem value="est">Eastern (EST)</SelectItem>
+          </SelectGroup>
+          <SelectGroup>
+            <SelectLabel>Europe</SelectLabel>
+            <SelectItem value="cet">Central European (CET)</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </>
   ),
 }

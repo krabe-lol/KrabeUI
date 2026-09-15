@@ -4,10 +4,27 @@ import { Badge } from "./badge"
 const meta = {
   title: "Components/Badge",
   component: Badge,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A small label for status, counts, or metadata.",
+          "```tsx",
+          'import { Badge } from "krabeui/badge"',
+          "```",
+        ].join("\n"),
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: "select",
       options: ["default", "secondary", "destructive", "outline", "ghost", "link"],
+    },
+    asChild: {
+      description:
+        "Renders as the single child element instead of a <span> (Radix Slot). The child must be one valid element, so the Playground swaps the label into a link when this is on.",
     },
   },
   args: {
@@ -17,27 +34,19 @@ const meta = {
 } satisfies Meta<typeof Badge>
 
 export default meta
+
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
-
-export const Variants: Story = {
-  render: () => (
-    <div className="flex flex-wrap items-center gap-2">
-      <Badge variant="default">Default</Badge>
-      <Badge variant="secondary">Secondary</Badge>
-      <Badge variant="destructive">Destructive</Badge>
-      <Badge variant="outline">Outline</Badge>
-      <Badge variant="ghost">Ghost</Badge>
-      <Badge variant="link">Link</Badge>
-    </div>
-  ),
-}
-
-export const AsLink: Story = {
-  render: () => (
-    <Badge asChild>
-      <a href="#story">Clickable badge</a>
-    </Badge>
+export const Default: Story = {
+  render: ({ asChild, children, ...args }) => (
+    <>
+      {asChild ? (
+        <Badge asChild {...args}>
+          <a href="#story">{children}</a>
+        </Badge>
+      ) : (
+        <Badge {...args}>{children}</Badge>
+      )}
+    </>
   ),
 }
