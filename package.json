@@ -1,6 +1,6 @@
 {
   "name": "krabeui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A personal, versioned React component library built on shadcn/ui and Radix primitives.",
   "license": "MIT",
   "type": "module",
@@ -129,6 +129,22 @@
       "types": "./dist/tooltip.d.ts",
       "import": "./dist/tooltip.js"
     },
+    "./command": {
+      "types": "./dist/command.d.ts",
+      "import": "./dist/command.js"
+    },
+    "./sheet": {
+      "types": "./dist/sheet.d.ts",
+      "import": "./dist/sheet.js"
+    },
+    "./skeleton": {
+      "types": "./dist/skeleton.d.ts",
+      "import": "./dist/skeleton.js"
+    },
+    "./slider": {
+      "types": "./dist/slider.d.ts",
+      "import": "./dist/slider.js"
+    },
     "./utils": {
       "types": "./dist/utils.d.ts",
       "import": "./dist/utils.js"
@@ -144,7 +160,7 @@
     "typecheck": "tsc -b --noEmit",
     "changeset": "changeset",
     "version": "changeset version",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 4061 --exact-port",
     "build-storybook": "storybook build",
     "test": "vitest run"
   },
@@ -155,6 +171,7 @@
   "dependencies": {
     "@base-ui/react": "^1.8.0",
     "class-variance-authority": "^0.7.1",
+    "cmdk": "^1.1.1",
     "cn": "^0.3.0",
     "lucide-react": "^1.45.0",
     "radix-ui": "^1.6.7",

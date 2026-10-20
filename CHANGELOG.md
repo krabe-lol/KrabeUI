@@ -1,5 +1,15 @@
 # krabeui
 
+## 0.3.0
+
+### Minor Changes
+
+- Add Command (built on `cmdk`, with `CommandDialog` for command palettes), Sheet, Skeleton, and Slider, each with its own `krabeui/<component>` subpath export and Storybook coverage.
+
+  `Sheet` goes beyond shadcn's version: on touch devices it closes when swiped toward its edge (past a quarter of its size, or with a quick flick), and snaps back otherwise. Mouse drags never swipe; swipes starting in inputs, sliders, or elements with `data-sheet-no-swipe` are ignored, and scrollable content scrolls before the sheet moves. Opt out with `<SheetContent swipeToClose={false}>`.
+
+  KrabeUI deliberately ships no `Drawer`: when shadcn offers several components for the same job, only the Radix-based one is included, so edge-anchored panels are always a `Sheet` (Radix `Dialog`) rather than shadcn's `vaul`-based `Drawer`.
+
 ## 0.2.0
 
 ### Minor Changes

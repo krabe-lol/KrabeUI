@@ -4,14 +4,16 @@ A personal, versioned React component library built on [shadcn/ui](https://ui.sh
 
 **Why:** copy-pasting the same component set into every project makes them drift apart over time. KrabeUI is the one canonical implementation. Each consuming project pins a version, and an update to KrabeUI never changes that project's UI until you deliberately bump the pin.
 
-Currently ships: Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Radio Group, Select, Separator, Sonner (Toast), Spinner, Switch, Table, Tabs, Textarea, Toggle, Toggle Group, Tooltip, Typography.
+Currently ships: Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Sonner (Toast), Spinner, Switch, Table, Tabs, Textarea, Toggle, Toggle Group, Tooltip, Typography.
+
+Deliberately **not** shipped: Drawer -- see [Radix first](#radix-first).
 
 ## Install
 
 Pinned by git tag, no registry required:
 
 ```bash
-npm install "krabeui@github:krabe-lol/krabeui#v0.2.0"
+npm install "krabeui@github:krabe-lol/krabeui#v0.3.0"
 ```
 
 npm clones the repo at that tag, runs its `prepare` script (`npm run build`) to produce `dist/`, and installs the result — you get compiled JS + types the same as any registry package, you just never move forward until you edit the pinned tag yourself.
@@ -89,9 +91,40 @@ Values can be any valid CSS color — the default theme uses `oklch()`, but `hsl
 
 **Note on existing projects:** Brettchen, Racehub, and Lagerist don't currently share one convention — Brettchen and Racehub already use this shadcn-style `--primary`/`--radius` variable set (Racehub via an older Tailwind v3 config, which still works since these are just CSS custom properties), but Lagerist is built on DaisyUI, which has entirely different variable names and semantics (`--color-primary`/`--color-primary-content` vs. `--primary`/`--primary-foreground`). Adopting KrabeUI in Lagerist means mapping its dracula palette onto KrabeUI's variable names, component by component — that migration is intentionally out of scope for this initial setup.
 
+## Radix first
+
+When shadcn offers several components for the same job, KrabeUI ships the one built on Radix and excludes the others. One primitive family means one set of conventions everywhere (`asChild`, `data-state`, portals, focus handling) and no extra third-party packages with their own maintenance cycles. Non-Radix libraries are only used where Radix has no equivalent at all.
+
+| Job | Shipped | Excluded |
+|---|---|---|
+| Panel sliding in from a screen edge | `Sheet` (Radix `Dialog`) | `Drawer` (built on [`vaul`](https://github.com/emilkowalski/vaul)) |
+
+So every edge-anchored panel, including mobile-style bottom sheets, is a `Sheet`, with `side` on `SheetContent` picking the edge:
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild><Button>Filters</Button></SheetTrigger>
+  <SheetContent side="bottom">...</SheetContent>
+</Sheet>
+```
+
+Besides the X button, an overlay click, Esc, and `SheetClose`, KrabeUI's `Sheet` adds what shadcn's lacks: **swipe to close** on touch devices. Swiping the panel toward its edge makes it follow the finger; releasing past a quarter of its size (or with a quick flick) closes it, otherwise it snaps back. To stay out of the way of content:
+
+- Only touch swipes count -- mouse drags never move the panel, so text selection and sliders work normally on desktop.
+- Swipes that start in an input, textarea, select, slider, or an element with `data-sheet-no-swipe` are ignored, as are swipes mostly perpendicular to the edge.
+- If the content under the finger can still scroll in the swipe direction (e.g. a scrolled list in a bottom sheet), the swipe scrolls instead.
+
+Disable it per sheet with `<SheetContent swipeToClose={false}>`. It's implemented in `sheet.tsx` with plain pointer events -- no extra dependency.
+
+Non-Radix components KrabeUI does ship, because there is no Radix alternative:
+
+- `Combobox` -- Base UI (Radix has no combobox primitive).
+- `Command` -- `cmdk`.
+- `Sonner` -- `sonner`. shadcn's Radix-based `toast` is gone from the registry for Radix projects (the CLI points to `sonner` instead), so there is nothing to choose between.
+
 ## Adding a new component later
 
-1. `npx shadcn@latest add <component>` — pulls it in the same way the existing components were added (a headless primitive -- usually Radix, occasionally Base UI for things Radix has no equivalent of, like `combobox` -- plus `cn` and `class-variance-authority`, styled with the existing token classes).
+1. `npx shadcn@latest add <component>` — pulls it in the same way the existing components were added (a headless primitive -- usually Radix, occasionally Base UI for things Radix has no equivalent of, like `combobox` -- plus `cn` and `class-variance-authority`, styled with the existing token classes). If the component depends on one KrabeUI already has (e.g. `command` pulls in `button`, `dialog`, `input-group`), the CLI offers to overwrite it with the upstream version: **always answer no** -- the local copies carry KrabeUI-specific changes (e.g. `Button`'s `icon` prop, `Sheet`'s swipe-to-close). Never add `drawer`, and check [Radix first](#radix-first) before adding anything not built on Radix.
 2. Add the entry to `src/index.ts` and to `tsup.config.ts`'s `entry` map.
 3. Add the matching subpath to `package.json`'s `exports`.
 4. `npm run build` to confirm it compiles; `npm run dev` to eyeball it in `src/App.tsx` (the playground).
@@ -114,19 +147,30 @@ Consuming projects stay on their old pin until someone edits the `#vX.Y.Z` in th
 
 ```bash
 npm install
-npm run dev      # Vite playground at src/App.tsx, exercises every component
+npm run dev      # Vite playground at src/App.tsx (http://localhost:4060)
 npm run build    # tsup -> dist/ (ESM + .d.ts per component) + dist/styles.css
 npm run typecheck
 ```
 
+## Ports
+
+All local ports are fixed (`strictPort` -- a busy port fails instead of silently moving) and registered as `krabeui-*` in `../ports.md`, the shared port list for all projects next to this repo:
+
+| Port | Used by |
+|---|---|
+| 4060 | `npm run dev` (Vite playground) |
+| 4061 | `npm run storybook` |
+| 4062 | `npm run test` (Vitest browser mode) |
+| 4063 | `npm run preview` |
+
 ## Storybook
 
 ```bash
-npm run storybook         # dev server at http://localhost:6006
+npm run storybook         # dev server at http://localhost:4061
 npm run build-storybook   # static export to storybook-static/
 npm run test              # runs each story's play function as a Vitest test in a real browser
 ```
 
-Every component has a story at `src/components/ui/<name>.stories.tsx`, covering its meaningful variants/states (sizes, disabled, invalid, open popovers, etc). Storybook reuses the project's own `vite.config.ts` (so the same `@tailwindcss/vite` pipeline compiles the stories) and imports `src/index.css` once in `.storybook/preview.tsx`. `@storybook/addon-vitest` wires those same stories into Vitest's browser mode (via `@vitest/browser-playwright`), so any story with a `play` function doubles as an interaction/regression test — see the `CssCheck` story in `button.stories.tsx` for an example that asserts a token actually compiles to the expected CSS value.
+Every component has a story at `src/components/ui/<name>.stories.tsx`, covering its meaningful variants/states (sizes, disabled, invalid, open popovers, etc). Storybook reuses the project's own `vite.config.ts` (so the same `@tailwindcss/vite` pipeline compiles the stories) and imports `src/index.css` once in `.storybook/preview.tsx`. `@storybook/addon-vitest` wires those same stories into Vitest's browser mode (via `@vitest/browser-playwright`), so any story with a `play` function doubles as an interaction/regression test — see the `SwipeToClose` and `SwipeWithScrollableContent` stories in `sheet.stories.tsx`.
 
 The toolbar has a **Scheme** control (light / dark, toggling the `.dark` class the same way consumers do) implemented as a single global decorator in `.storybook/preview.tsx` that reads `context.globals`.
