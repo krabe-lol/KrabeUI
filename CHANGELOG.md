@@ -1,5 +1,18 @@
 # krabeui
 
+## 0.4.0
+
+### Minor Changes
+
+- **Breaking:** Rename `Sonner` to `Toast`, the more common name. The subpath export is now `krabeui/toast`; `krabeui/sonner` is removed, so change `import { Toaster } from "krabeui/sonner"` to `"krabeui/toast"`. `krabeui/toast` also re-exports `toast()`, so `import { Toaster, toast } from "krabeui/toast"` works without depending on `sonner` directly and always reaches the same `sonner` instance as `<Toaster />`. The Storybook page moves from Components/Sonner to Components/Toast.
+- Add `Alert`, `Accordion` and `Lightbox`, each with its own `krabeui/<component>` subpath export and Storybook coverage.
+
+  - `Alert` is shadcn's, plus a `success` variant using the new `--success` token.
+  - `Accordion` is shadcn's (Radix `Accordion`).
+  - `Lightbox` is KrabeUI's own image viewer on Radix `Dialog`: `<Lightbox images>` with `<LightboxTrigger index>` around your own previews, previous/next buttons, arrow keys, a counter, a thumbnail strip, touch swipes to page and to close, controllable `open`/`index`, and translatable `labels`.
+
+- Add a `success` variant to `Badge`, styled like `destructive` but green. It uses a new `--success` token (`bg-success`, `text-success`, ...), with defaults for light and dark mode that projects can override like any other token.
+
 ## 0.3.0
 
 ### Minor Changes
