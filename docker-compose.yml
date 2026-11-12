@@ -1,0 +1,7 @@
+services:
+  krabeui-storybook:
+    build: .
+    container_name: krabeui-storybook
+    restart: unless-stopped
+    ports:
+      - "4064:80"

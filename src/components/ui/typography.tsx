@@ -6,10 +6,10 @@ import { Slot } from "radix-ui"
 const typographyVariants = cva("", {
   variants: {
     variant: {
-      h1: "font-heading scroll-m-20 text-4xl font-extrabold tracking-tight text-balance",
-      h2: "font-heading scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0",
-      h3: "font-heading scroll-m-20 text-2xl font-semibold tracking-tight",
-      h4: "font-heading scroll-m-20 text-xl font-semibold tracking-tight",
+      h1: "font-heading scroll-m-20 text-4xl font-extrabold text-balance",
+      h2: "font-heading scroll-m-20 text-3xl font-semibold first:mt-0",
+      h3: "font-heading scroll-m-20 text-2xl font-semibold",
+      h4: "font-heading scroll-m-20 text-xl font-semibold",
       p: "leading-7 [&:not(:first-child)]:mt-6",
       blockquote: "mt-6 border-l-2 pl-6 italic",
       list: "my-6 ml-6 list-disc [&>li]:mt-2",
@@ -59,7 +59,7 @@ function Typography({
     <Comp
       data-slot="typography"
       data-variant={variant}
-      className={cn(typographyVariants({ variant }), className)}
+      className={cn("mb-4", typographyVariants({ variant }), className)}
       {...props}
     />
   )
