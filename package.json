@@ -102,9 +102,9 @@
       "types": "./dist/radio-group.d.ts",
       "import": "./dist/radio-group.js"
     },
-    "./sonner": {
-      "types": "./dist/sonner.d.ts",
-      "import": "./dist/sonner.js"
+    "./toast": {
+      "types": "./dist/toast.d.ts",
+      "import": "./dist/toast.js"
     },
     "./spinner": {
       "types": "./dist/spinner.d.ts",

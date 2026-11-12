@@ -24,7 +24,7 @@ export default defineConfig({
     empty: "src/components/ui/empty.tsx",
     "input-group": "src/components/ui/input-group.tsx",
     "radio-group": "src/components/ui/radio-group.tsx",
-    sonner: "src/components/ui/sonner.tsx",
+    toast: "src/components/ui/toast.tsx",
     spinner: "src/components/ui/spinner.tsx",
     switch: "src/components/ui/switch.tsx",
     textarea: "src/components/ui/textarea.tsx",

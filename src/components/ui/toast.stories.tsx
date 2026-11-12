@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { toast } from "sonner"
 import { Button } from "./button"
-import { Toaster } from "./sonner"
+import { Toaster, toast } from "./toast"
 
 const meta = {
-  title: "Components/Sonner",
+  title: "Components/Toast",
   component: Toaster,
   tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
         component: [
-          "A toast notification renderer, built on `sonner`. Render one `<Toaster />` at the app root, then call `toast()` from anywhere.",
+          "Toast notifications, built on `sonner`. Render one `<Toaster />` at the app root, then call `toast()` from anywhere. Import `toast` from KrabeUI rather than from `sonner` directly, so it always reaches the same `sonner` instance as `<Toaster />`.",
           "```tsx",
-          'import { Toaster } from "krabeui/sonner"',
+          'import { Toaster, toast } from "krabeui/toast"',
           "```",
         ].join("\n"),
       },

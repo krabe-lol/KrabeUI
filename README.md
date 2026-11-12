@@ -4,7 +4,7 @@ A personal, versioned React component library built on [shadcn/ui](https://ui.sh
 
 **Why:** copy-pasting the same component set into every project makes them drift apart over time. KrabeUI is the one canonical implementation. Each consuming project pins a version, and an update to KrabeUI never changes that project's UI until you deliberately bump the pin.
 
-Currently ships: Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Sonner (Toast), Spinner, Switch, Table, Tabs, Textarea, Toggle, Toggle Group, Tooltip, Typography.
+Currently ships: Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, Typography.
 
 Deliberately **not** shipped: Drawer -- see [Radix first](#radix-first).
 
@@ -120,7 +120,7 @@ Non-Radix components KrabeUI does ship, because there is no Radix alternative:
 
 - `Combobox` -- Base UI (Radix has no combobox primitive).
 - `Command` -- `cmdk`.
-- `Sonner` -- `sonner`. shadcn's Radix-based `toast` is gone from the registry for Radix projects (the CLI points to `sonner` instead), so there is nothing to choose between.
+- `Toast` -- `sonner` (shadcn calls the component `sonner`; KrabeUI uses the more common name). shadcn's Radix-based `toast` is gone from the registry for Radix projects (the CLI points to `sonner` instead), so there is nothing to choose between.
 
 ## Adding a new component later
 

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Toaster as Sonner, type ToasterProps } from "sonner"
+import { Toaster as Sonner, toast, type ToasterProps } from "sonner"
 import { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
 
 /**
@@ -69,4 +69,4 @@ function Toaster({ ...props }: ToasterProps) {
   )
 }
 
-export { Toaster }
+export { Toaster, toast }
