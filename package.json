@@ -146,6 +146,18 @@
       "types": "./dist/slider.d.ts",
       "import": "./dist/slider.js"
     },
+    "./accordion": {
+      "types": "./dist/accordion.d.ts",
+      "import": "./dist/accordion.js"
+    },
+    "./alert": {
+      "types": "./dist/alert.d.ts",
+      "import": "./dist/alert.js"
+    },
+    "./lightbox": {
+      "types": "./dist/lightbox.d.ts",
+      "import": "./dist/lightbox.js"
+    },
     "./utils": {
       "types": "./dist/utils.d.ts",
       "import": "./dist/utils.js"

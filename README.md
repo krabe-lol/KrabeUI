@@ -4,7 +4,7 @@ A personal, versioned React component library built on [shadcn/ui](https://ui.sh
 
 **Why:** copy-pasting the same component set into every project makes them drift apart over time. KrabeUI is the one canonical implementation. Each consuming project pins a version, and an update to KrabeUI never changes that project's UI until you deliberately bump the pin.
 
-Currently ships: Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, Typography.
+Currently ships: Accordion, Alert, Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Lightbox, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, Typography.
 
 Deliberately **not** shipped: Drawer -- see [Radix first](#radix-first).
 
@@ -74,7 +74,7 @@ At minimum, override:
 | `--radius` | corner rounding for every component (`--radius-sm/md/lg/xl` all derive from this one value) |
 | `--background`, `--foreground`, `--card`, `--card-foreground`, `--popover`, `--popover-foreground`, `--secondary`, `--secondary-foreground`, `--muted`, `--muted-foreground`, `--accent`, `--accent-foreground`, `--border`, `--input`, `--ring` | the neutral surface ramp |
 
-`--destructive` is also available if a project wants a different error/danger color than the default.
+`--destructive` and `--success` are also available if a project wants a different error/danger or success color than the default (`Badge` and `Alert` use them for their `destructive` and `success` variants).
 
 Values can be any valid CSS color — the default theme uses `oklch()`, but `hsl()`/`rgb()`/hex all work fine as raw custom-property values.
 
@@ -121,6 +121,24 @@ Non-Radix components KrabeUI does ship, because there is no Radix alternative:
 - `Combobox` -- Base UI (Radix has no combobox primitive).
 - `Command` -- `cmdk`.
 - `Toast` -- `sonner` (shadcn calls the component `sonner`; KrabeUI uses the more common name). shadcn's Radix-based `toast` is gone from the registry for Radix projects (the CLI points to `sonner` instead), so there is nothing to choose between.
+
+## Lightbox
+
+`Lightbox` isn't in shadcn; it's KrabeUI's own, built on Radix `Dialog` like `Sheet`. Wrap your own previews in `LightboxTrigger`s (a `<button>` around the `<img>` keeps them keyboard-accessible):
+
+```tsx
+<Lightbox images={[{ src: "/a.jpg", alt: "Harbor at dusk", caption: "Harbor" }, ...]}>
+  <LightboxTrigger index={0} asChild>
+    <button><img src="/a-thumb.jpg" alt="Harbor at dusk" /></button>
+  </LightboxTrigger>
+</Lightbox>
+```
+
+- Shows one image at a time, scaled to fit, with an optional caption. Closes via the X button, Esc, or a click next to the image.
+- With more than one image: previous/next buttons, arrow keys, a counter ("3 / 12") and a thumbnail strip (`thumbnail` falls back to `src`).
+- Touch swipes left/right page through the images, a swipe down closes -- same rules as `Sheet` (touch only, past a share of the size or a quick flick, otherwise it snaps back). Swipes starting on a button, link or an element with `data-lightbox-no-swipe` are ignored.
+- `open`/`onOpenChange` and `index`/`onIndexChange` make it controllable; `labels` translates the (English) screen-reader texts.
+- It always renders in the dark theme, whatever the page uses.
 
 ## Adding a new component later
 
