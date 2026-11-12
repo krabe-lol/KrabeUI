@@ -13,6 +13,7 @@
 - Entscheiden, ob `docker-compose.yml` (lokaler Build) neben `stack.yml` (Registry-Image) bleibt; danach `docker-compose.yml` und `.dockerignore` einchecken oder verwerfen.
 
 ## Entscheidungen
+- Accordion-Keyframes (`accordion-down`/`-up`) und `--animate-accordion-*` stehen selbst in `src/index.css`, statt sich auf `tw-animate-css` bzw. shadcns `tailwind.css` zu verlassen.
 - `optimizeDeps.include: ['expect-type']` im Storybook-Testprojekt (`vite.config.ts`): Ohne Vorbündeln des CommonJS-Pakets hing der Vitest-Browserlauf zeitweise, weil keine Testdatei `expectTypeOf` importieren konnte.
 - Lightbox ist ein Eigenbau auf Radix `Dialog` (shadcn hat keine): Galerie-Navigation, Wischgesten nach dem Muster von `Sheet`, Thumbnail-Leiste; kein Zoom. Rendert immer im Dark-Look (`dark`-Klasse auf Overlay und Content).
 - Grün für Erfolg kommt aus dem neuen Token `--success` (wie `--destructive` ohne Foreground-Token), damit Projekte es überschreiben können.
