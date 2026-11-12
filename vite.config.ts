@@ -35,6 +35,12 @@ export default defineConfig({
             configDir: path.join(import.meta.dirname, '.storybook'),
           }),
         ],
+        // expect-type ships CommonJS. When Vite doesn't pre-bundle it, the
+        // browser gets the raw file, every test file fails to import
+        // `expectTypeOf`, and the run hangs.
+        optimizeDeps: {
+          include: ['expect-type'],
+        },
         test: {
           name: 'storybook',
           browser: {
