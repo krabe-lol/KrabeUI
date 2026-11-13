@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.4.1` (Tag `v0.4.1`), Branch `main`.
-- Ausgeliefert: 35 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.5.0` (Tag `v0.5.0`), Branch `main`.
+- Ausgeliefert: 36 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.5.0 brachte: MasterDetail (`krabeui/master-detail`, Eigenbau: Liste links, Details rechts) und Typography-Anpassungen.
 - 0.4.0 brachte: Sonner → Toast (`krabeui/toast`, inkl. `toast()`), Badge `success` mit Token `--success`, Alert (inkl. `success`), Accordion, Lightbox.
 - Storybook-Showcase wird per `Dockerfile` (Build + nginx) gepackt. Der Gitea-Workflow `.gitea/workflows/build-and-push-docker.yml` baut bei Push auf `main` das Image `git.krabe.lol/krabe-lol/krabeui:latest`; `stack.yml` ist das Portainer-Stack dazu (Host-Port 5003).
 - Ports (belegt): dev 4060 und preview 4063 (`vite.config.ts`, `strictPort: true`), Storybook 4061 (`npm run storybook`, `--exact-port`), Vitest-Browser-API 4062 (`strictPort: true`), lokaler Docker-Container 4064 (`docker-compose.yml`). Entspricht `ports.md`.
