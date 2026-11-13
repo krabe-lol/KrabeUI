@@ -1,5 +1,7 @@
 import * as React from "react"
 import { cn } from "cn"
+import { ChevronRightIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
@@ -101,6 +103,127 @@ function TableCaption({
   )
 }
 
+// Expandable rows (KrabeUI's own, shadcn has no equivalent): a normal row plus,
+// while open, a detail row spanning all columns. Place <TableExpandTrigger> in
+// any cell of the row.
+
+type TableExpandableRowContextValue = {
+  open: boolean
+  toggle: () => void
+  detailId: string
+}
+
+const TableExpandableRowContext =
+  React.createContext<TableExpandableRowContextValue | null>(null)
+
+type TableExpandableRowProps = Omit<React.ComponentProps<"tr">, "defaultValue"> & {
+  /** Content of the detail row, shown while open (e.g. a nested table). */
+  detail: React.ReactNode
+  /** Number of columns of the table; the detail cell spans all of them. */
+  colSpan: number
+  /** Open state (controlled). */
+  open?: boolean
+  /** Initially open (uncontrolled). */
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
+  /** Classes for the detail row. */
+  detailClassName?: string
+}
+
+function TableExpandableRow({
+  detail,
+  colSpan,
+  open: openProp,
+  defaultOpen = false,
+  onOpenChange,
+  detailClassName,
+  children,
+  ...props
+}: TableExpandableRowProps) {
+  const [inner, setInner] = React.useState(defaultOpen)
+  const controlled = openProp !== undefined
+  const open = controlled ? openProp : inner
+  const detailId = React.useId()
+
+  const toggle = React.useCallback(() => {
+    if (!controlled) setInner(!open)
+    onOpenChange?.(!open)
+  }, [controlled, open, onOpenChange])
+
+  const context = React.useMemo(
+    () => ({ open, toggle, detailId }),
+    [open, toggle, detailId]
+  )
+
+  return (
+    <TableExpandableRowContext.Provider value={context}>
+      <TableRow
+        data-slot="table-expandable-row"
+        data-state={open ? "open" : "closed"}
+        {...props}
+      >
+        {children}
+      </TableRow>
+      {open ? (
+        <TableRow
+          id={detailId}
+          data-slot="table-expandable-detail"
+          className={cn("bg-muted/30 hover:bg-muted/30", detailClassName)}
+        >
+          <TableCell colSpan={colSpan} className="p-4 whitespace-normal">
+            {detail}
+          </TableCell>
+        </TableRow>
+      ) : null}
+    </TableExpandableRowContext.Provider>
+  )
+}
+
+type TableExpandTriggerProps = Omit<
+  React.ComponentProps<typeof Button>,
+  "icon" | "onClick" | "children"
+> & {
+  /** Accessible name while closed. */
+  expandLabel?: string
+  /** Accessible name while open. */
+  collapseLabel?: string
+}
+
+function TableExpandTrigger({
+  expandLabel = "Expand details",
+  collapseLabel = "Collapse details",
+  variant = "ghost",
+  size = "sm",
+  className,
+  ...props
+}: TableExpandTriggerProps) {
+  const context = React.useContext(TableExpandableRowContext)
+  if (!context) {
+    throw new Error("TableExpandTrigger must be used within <TableExpandableRow>")
+  }
+  const { open, toggle, detailId } = context
+
+  return (
+    <Button
+      type="button"
+      icon
+      variant={variant}
+      size={size}
+      data-slot="table-expand-trigger"
+      aria-expanded={open}
+      aria-controls={open ? detailId : undefined}
+      aria-label={open ? collapseLabel : expandLabel}
+      onClick={toggle}
+      className={className}
+      {...props}
+    >
+      <ChevronRightIcon
+        className={cn("transition-transform", open && "rotate-90")}
+      />
+    </Button>
+  )
+}
+
 export {
   Table,
   TableHeader,
@@ -110,4 +233,6 @@ export {
   TableRow,
   TableCell,
   TableCaption,
+  TableExpandableRow,
+  TableExpandTrigger,
 }
