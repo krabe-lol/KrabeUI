@@ -4,7 +4,7 @@ A personal, versioned React component library built on [shadcn/ui](https://ui.sh
 
 **Why:** copy-pasting the same component set into every project makes them drift apart over time. KrabeUI is the one canonical implementation. Each consuming project pins a version, and an update to KrabeUI never changes that project's UI until you deliberately bump the pin.
 
-Currently ships: Accordion, Alert, Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Lightbox, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, Typography.
+Currently ships: Accordion, Alert, Aspect Ratio, Badge, Breadcrumb, Button, Button Group, Card, Checkbox, Combobox, Command, Dialog, Dropdown Menu, Empty, Field, Input, Input Group, Label, Lightbox, Master Detail, Radio Group, Select, Separator, Sheet, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, Typography.
 
 Deliberately **not** shipped: Drawer -- see [Radix first](#radix-first).
 

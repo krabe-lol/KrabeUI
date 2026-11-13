@@ -38,6 +38,7 @@ export default defineConfig({
     accordion: "src/components/ui/accordion.tsx",
     alert: "src/components/ui/alert.tsx",
     lightbox: "src/components/ui/lightbox.tsx",
+    "master-detail": "src/components/ui/master-detail.tsx",
     utils: "src/lib/utils.ts",
   },
   format: ["esm"],

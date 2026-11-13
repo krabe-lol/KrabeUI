@@ -158,6 +158,10 @@
       "types": "./dist/lightbox.d.ts",
       "import": "./dist/lightbox.js"
     },
+    "./master-detail": {
+      "types": "./dist/master-detail.d.ts",
+      "import": "./dist/master-detail.js"
+    },
     "./utils": {
       "types": "./dist/utils.d.ts",
       "import": "./dist/utils.js"
