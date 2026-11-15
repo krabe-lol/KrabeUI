@@ -1,5 +1,11 @@
 # krabeui
 
+## 0.7.0
+
+### Minor Changes
+
+- 876c13f: Add `SignaturePad` (`krabeui/signature-pad`): draw a signature with mouse, finger or pen. `onChange` receives a PNG data URL after every stroke (always black ink on white, like paper) or `null` once cleared. Texts via `placeholder`, `clearLabel` and `label`; `aria-invalid` marks it as missing; `disabled` and `height` props.
+
 ## 0.6.0
 
 ### Minor Changes
