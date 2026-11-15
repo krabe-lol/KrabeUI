@@ -33,6 +33,7 @@ export default defineConfig({
     tooltip: "src/components/ui/tooltip.tsx",
     command: "src/components/ui/command.tsx",
     sheet: "src/components/ui/sheet.tsx",
+    "signature-pad": "src/components/ui/signature-pad.tsx",
     skeleton: "src/components/ui/skeleton.tsx",
     slider: "src/components/ui/slider.tsx",
     accordion: "src/components/ui/accordion.tsx",

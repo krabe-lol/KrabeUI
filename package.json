@@ -138,6 +138,10 @@
       "types": "./dist/sheet.d.ts",
       "import": "./dist/sheet.js"
     },
+    "./signature-pad": {
+      "types": "./dist/signature-pad.d.ts",
+      "import": "./dist/signature-pad.js"
+    },
     "./skeleton": {
       "types": "./dist/skeleton.d.ts",
       "import": "./dist/skeleton.js"
