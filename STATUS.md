@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.10.0` (Tag `v0.10.0`), Branch `main`.
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.11.0` (Tag `v0.11.0`), Branch `main`.
 - Ausgeliefert: 38 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.11.0 brachte: einheitlichen Look für vertikale Tabs und MasterDetail (Trennlinie, ausgewählter Eintrag `bg-muted`, rechts eckig) und Rundungen nur noch als Anteil von `--radius` (neues Token `--radius-xs`).
 - 0.10.0 brachte: FileTile im Querformat (Format-Icon links, Name und Typ/Größe in zwei Zeilen, Download-Button und Aktionen rechts) und eigene Icons für weitere Formate (Dokument, Tabelle, Präsentation, Archiv, Video, Audio).
 - 0.9.0 brachte: FileTile (`krabeui/file-tile`, Eigenbau: Dokument-Kacheln mit Icon oder Vorschau, Name, Meta-Zeile, ganze Kachel als Link) für die Dokumente der Veranstaltungen in Papierstau.
 - 0.8.0 brachte: Select öffnet unter dem Trigger, zeigt höchstens 10,5 Einträge und hat optional eine Suche (`SelectContent searchable`). Sichtbare Änderung für alle Selects in Projekten, die auf 0.8.0 gehen.
@@ -19,6 +20,9 @@
 - Entscheiden, ob `docker-compose.yml` (lokaler Build) neben `stack.yml` (Registry-Image) bleibt; danach `docker-compose.yml` und `.dockerignore` einchecken oder verwerfen.
 
 ## Entscheidungen
+- Rundungen sind immer ein Anteil von `--radius` (neu: `--radius-xs` = 0,4×). Die festen px-Obergrenzen und -Abzüge aus shadcn sind entfernt, damit das Projekt die Rundung frei setzen kann. Ecken, die eckig sein sollen, sind ausdrücklich eckig. Die Regel steht in `CLAUDE.md` (Projektspezifisch) und in der README.
+- Vertikale Tabs und MasterDetail haben denselben Look: Trennlinie zur Detailansicht, ausgewählter Eintrag `bg-muted` ohne Rahmen und Balken, links gerundet, rechts eckig an der Linie. Bei MasterDetail zeichnen Liste (`border-r`) und Content (`border-l`, `-ml-px`) die Linie beide, damit sie trotz der sticky Liste so weit reicht wie die längere Spalte.
+- shadcns Custom-Variants (`data-active`, `data-vertical`, `data-horizontal` …) nutzen `:where()` und haben deshalb keine Spezifität. Overrides darin verlieren gegen normale `group-data-[…]`-Klassen. Deshalb sind die nur horizontal gültigen Tab-Stile mit `group-data-horizontal/tabs:` eingeschränkt, statt sie vertikal zu überschreiben.
 - FileTile macht die ganze Kachel per Stretched-Link (`after:absolute inset-0` am Namen) klickbar, statt sie in ein `<a>` zu packen: So bleiben Download-Button und Aktionen rechts eigene, gültige Bedienelemente (kein Button im Link).
 - Der FileTile-Download ist ein `<a download>` mit `buttonVariants`, nicht `Button asChild`: `Button` mit `icon` reicht seine Kinder gefiltert als Array an Radix' `Slot` weiter, und der wirft dann einen Fehler.
 - Select öffnet standardmäßig unter dem Trigger (`position="popper"`). Radix' `item-aligned` setzt die Höhe selbst bis zum Fensterrand und rechnet ein Suchfeld über der Liste nicht ein, lässt sich also weder auf 10,5 Einträge begrenzen noch mit der Suche kombinieren.
