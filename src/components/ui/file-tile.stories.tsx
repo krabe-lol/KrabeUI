@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { MoreVertical } from "lucide-react"
+import { expect, within } from "storybook/test"
 import { Button } from "./button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
 import { FileTile, FileTileGrid } from "./file-tile"
@@ -12,9 +13,9 @@ const meta = {
     docs: {
       description: {
         component: [
-          "Small tiles for documents or other files (KrabeUI's own, shadcn has none). `FileTileGrid` lays them out side by side and wraps them on narrow screens.",
-          "Each `FileTile` shows an icon by the extension of `name` (PDF, image, other; override with `kind`) or an image `preview`, the name on up to two lines and an optional `meta` line such as type and size.",
-          "With `href` the whole tile is the link (`target=\"_blank\"` sets `rel=\"noreferrer\"`). `actions`, e.g. a `DropdownMenu`, sit in the top-right corner and stay clickable on their own.",
+          "Compact landscape tiles for documents or other files (KrabeUI's own, shadcn has none). `FileTileGrid` lays them out side by side and wraps them on narrow screens.",
+          "Each `FileTile` shows a small icon for the format by the extension of `name` (PDF, image, document, spreadsheet, presentation, archive, video, audio, other; override with `kind`) or an image `preview` on the left, the name and an optional `meta` line such as type and size in the middle (one line each), and a download button on the right.",
+          "With `href` the whole tile is the link (`target=\"_blank\"` sets `rel=\"noreferrer\"`) and the download button downloads it (or `downloadHref`). `actions`, e.g. a `DropdownMenu`, sit after the download button and stay clickable on their own.",
           "```tsx",
           'import { FileTile, FileTileGrid } from "krabeui/file-tile"',
           "```",
@@ -40,20 +41,30 @@ const PREVIEW = `data:image/svg+xml,${encodeURIComponent(
 
 export const Default: Story = {
   render: (args) => (
-    <FileTileGrid className="max-w-md">
+    <FileTileGrid className="max-w-sm">
       <FileTile {...args} />
     </FileTileGrid>
   ),
+  play: async ({ canvasElement }) => {
+    const download = within(canvasElement).getByRole("link", { name: "Download" })
+    await expect(download).toHaveAttribute("download")
+    await expect(download).toHaveAttribute("href", "#")
+    await expect(download).toHaveAccessibleDescription("Invitation to tender 2027.pdf")
+  },
 }
 
 export const Grid: Story = {
   render: () => (
     <FileTileGrid className="max-w-2xl">
       <FileTile name="Invitation to tender 2027.pdf" href="#" meta="PDF · 240 KB" />
-      <FileTile name="Schedule.pdf" href="#" meta="PDF · 80 KB" />
+      <FileTile name="Entry form.docx" href="#" meta="DOCX · 45 KB" />
+      <FileTile name="Results.xlsx" href="#" meta="XLSX · 32 KB" />
+      <FileTile name="Briefing.pptx" href="#" meta="PPTX · 3.8 MB" />
       <FileTile name="Track map.png" href="#" meta="PNG · 1.1 MB" preview={PREVIEW} />
       <FileTile name="Directions and paddock for teams arriving on Saturday.jpg" href="#" meta="JPG · 2.4 MB" />
-      <FileTile name="Results.xlsx" href="#" meta="XLSX · 32 KB" />
+      <FileTile name="Photos.zip" href="#" meta="ZIP · 48 MB" />
+      <FileTile name="Onboard lap.mp4" href="#" meta="MP4 · 120 MB" />
+      <FileTile name="Notes" href="#" meta="File · 2 KB" />
     </FileTileGrid>
   ),
 }
@@ -61,8 +72,8 @@ export const Grid: Story = {
 function TileActions({ name }: { name: string }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="secondary" size="xs" icon aria-label={`Actions for ${name}`}>
+      <DropdownMenuTrigger asChild showChevron={false}>
+        <Button variant="ghost" icon aria-label={`Actions for ${name}`}>
           <MoreVertical />
         </Button>
       </DropdownMenuTrigger>
@@ -86,7 +97,7 @@ export const WithActions: Story = {
 export const WithoutLink: Story = {
   args: { href: undefined, meta: "Uploading …" },
   render: (args) => (
-    <FileTileGrid className="max-w-md">
+    <FileTileGrid className="max-w-sm">
       <FileTile {...args} />
     </FileTileGrid>
   ),
