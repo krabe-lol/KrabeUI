@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.11.0` (Tag `v0.11.0`), Branch `main`.
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.12.0` (Tag `v0.12.0`), Branch `main`.
 - Ausgeliefert: 38 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.12.0 brachte: `DialogFooter` ohne grauen Streifen (kein Hintergrund, keine Trennlinie, kein Eigen-Padding): nur noch die Button-Reihe. Sichtbare Änderung für alle Dialoge in Projekten, die auf 0.12.0 gehen.
 - 0.11.0 brachte: einheitlichen Look für vertikale Tabs und MasterDetail (Trennlinie, ausgewählter Eintrag `bg-muted`, rechts eckig) und Rundungen nur noch als Anteil von `--radius` (neues Token `--radius-xs`).
 - 0.10.0 brachte: FileTile im Querformat (Format-Icon links, Name und Typ/Größe in zwei Zeilen, Download-Button und Aktionen rechts) und eigene Icons für weitere Formate (Dokument, Tabelle, Präsentation, Archiv, Video, Audio).
 - 0.9.0 brachte: FileTile (`krabeui/file-tile`, Eigenbau: Dokument-Kacheln mit Icon oder Vorschau, Name, Meta-Zeile, ganze Kachel als Link) für die Dokumente der Veranstaltungen in Papierstau.
@@ -20,6 +21,7 @@
 - Entscheiden, ob `docker-compose.yml` (lokaler Build) neben `stack.yml` (Registry-Image) bleibt; danach `docker-compose.yml` und `.dockerignore` einchecken oder verwerfen.
 
 ## Entscheidungen
+- `DialogFooter` ist nur die Button-Reihe ohne Hintergrund und Rahmen (Wunsch des Inhabers, gilt für alle Projekte). Den Abstand zum Inhalt liefert das `gap-4` von `DialogContent`. `CardFooter` behält bewusst den grauen Streifen (`bg-muted/50`, `border-t`), `SheetFooter` hat ihn nicht.
 - Rundungen sind immer ein Anteil von `--radius` (neu: `--radius-xs` = 0,4×). Die festen px-Obergrenzen und -Abzüge aus shadcn sind entfernt, damit das Projekt die Rundung frei setzen kann. Ecken, die eckig sein sollen, sind ausdrücklich eckig. Die Regel steht in `CLAUDE.md` (Projektspezifisch) und in der README.
 - Vertikale Tabs und MasterDetail haben denselben Look: Trennlinie zur Detailansicht, ausgewählter Eintrag `bg-muted` ohne Rahmen und Balken, links gerundet, rechts eckig an der Linie. Bei MasterDetail zeichnen Liste (`border-r`) und Content (`border-l`, `-ml-px`) die Linie beide, damit sie trotz der sticky Liste so weit reicht wie die längere Spalte.
 - shadcns Custom-Variants (`data-active`, `data-vertical`, `data-horizontal` …) nutzen `:where()` und haben deshalb keine Spezifität. Overrides darin verlieren gegen normale `group-data-[…]`-Klassen. Deshalb sind die nur horizontal gültigen Tab-Stile mit `group-data-horizontal/tabs:` eingeschränkt, statt sie vertikal zu überschreiben.
