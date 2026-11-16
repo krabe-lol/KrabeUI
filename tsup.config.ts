@@ -14,6 +14,7 @@ export default defineConfig({
     badge: "src/components/ui/badge.tsx",
     table: "src/components/ui/table.tsx",
     field: "src/components/ui/field.tsx",
+    "file-tile": "src/components/ui/file-tile.tsx",
     separator: "src/components/ui/separator.tsx",
     tabs: "src/components/ui/tabs.tsx",
     typography: "src/components/ui/typography.tsx",

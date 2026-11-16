@@ -22,6 +22,10 @@
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js"
     },
+    "./file-tile": {
+      "types": "./dist/file-tile.d.ts",
+      "import": "./dist/file-tile.js"
+    },
     "./input": {
       "types": "./dist/input.d.ts",
       "import": "./dist/input.js"
