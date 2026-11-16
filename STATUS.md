@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.8.0` (Tag `v0.8.0`), Branch `main`.
-- Ausgeliefert: 37 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.9.0` (Tag `v0.9.0`), Branch `main`.
+- Ausgeliefert: 38 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.9.0 brachte: FileTile (`krabeui/file-tile`, Eigenbau: Dokument-Kacheln mit Icon oder Vorschau, Name, Meta-Zeile, ganze Kachel als Link, Aktionen oben rechts) für die Dokumente der Veranstaltungen in Papierstau.
 - 0.8.0 brachte: Select öffnet unter dem Trigger, zeigt höchstens 10,5 Einträge und hat optional eine Suche (`SelectContent searchable`). Sichtbare Änderung für alle Selects in Projekten, die auf 0.8.0 gehen.
 - 0.7.0 brachte: SignaturePad (`krabeui/signature-pad`, Eigenbau auf Canvas mit Pointer-Events, ohne neue Abhängigkeit) für die Unterschrift beim Lizenzantrag in Papierstau.
 - 0.6.0 brachte: aufklappbare Tabellenzeilen (`TableExpandableRow`, `TableExpandTrigger` in `krabeui/table`).
@@ -17,6 +18,7 @@
 - Entscheiden, ob `docker-compose.yml` (lokaler Build) neben `stack.yml` (Registry-Image) bleibt; danach `docker-compose.yml` und `.dockerignore` einchecken oder verwerfen.
 
 ## Entscheidungen
+- FileTile macht die ganze Kachel per Stretched-Link (`after:absolute inset-0` am Namen) klickbar, statt sie in ein `<a>` zu packen: So bleiben die Aktionen oben rechts eigene, gültige Bedienelemente (kein Button im Link).
 - Select öffnet standardmäßig unter dem Trigger (`position="popper"`). Radix' `item-aligned` setzt die Höhe selbst bis zum Fensterrand und rechnet ein Suchfeld über der Liste nicht ein, lässt sich also weder auf 10,5 Einträge begrenzen noch mit der Suche kombinieren.
 - Die Select-Suche blendet nicht passende Einträge nur aus (`hidden`) und unmountet sie nicht. So zeigt der Trigger den gewählten Wert weiter an, und Radix' Pfeiltasten-Navigation überspringt die ausgeblendeten Einträge. Radix setzt den Fokus beim Öffnen und beim Hover auf Einträge; Tippen holt ihn ins Suchfeld zurück (`handleSearchKeyDownCapture`).
 - SignaturePad exportiert immer schwarze Tinte auf Weiß (wie Papier), während beim Zeichnen die Theme-Farbe gilt: Das Bild ist ein Dokument und muss überall lesbar bleiben.
