@@ -21,6 +21,7 @@
 - Entscheiden, ob `docker-compose.yml` (lokaler Build) neben `stack.yml` (Registry-Image) bleibt; danach `docker-compose.yml` und `.dockerignore` einchecken oder verwerfen.
 
 ## Entscheidungen
+- `Separator` mit Label (Children) zeichnet je eine Linie links und rechts bzw. oben und unten neben das Label, statt eine durchgehende Linie mit Hintergrund hinter dem Label zu überdecken: So passt er auf jeden Untergrund (Card, Muted …). Nicht dekorativ übernimmt er das Label per `aria-labelledby` als Namen, weil `role="separator"` seinen Inhalt vor Screenreadern verbirgt.
 - `DialogFooter` ist nur die Button-Reihe ohne Hintergrund und Rahmen (Wunsch des Inhabers, gilt für alle Projekte). Den Abstand zum Inhalt liefert das `gap-4` von `DialogContent`. `CardFooter` behält bewusst den grauen Streifen (`bg-muted/50`, `border-t`), `SheetFooter` hat ihn nicht.
 - Rundungen sind immer ein Anteil von `--radius` (neu: `--radius-xs` = 0,4×). Die festen px-Obergrenzen und -Abzüge aus shadcn sind entfernt, damit das Projekt die Rundung frei setzen kann. Ecken, die eckig sein sollen, sind ausdrücklich eckig. Die Regel steht in `CLAUDE.md` (Projektspezifisch) und in der README.
 - Vertikale Tabs und MasterDetail haben denselben Look: Trennlinie zur Detailansicht, ausgewählter Eintrag `bg-muted` ohne Rahmen und Balken, links gerundet, rechts eckig an der Linie. Bei MasterDetail zeichnen Liste (`border-r`) und Content (`border-l`, `-ml-px`) die Linie beide, damit sie trotz der sticky Liste so weit reicht wie die längere Spalte.
@@ -46,4 +47,5 @@
 ## Bekannte Probleme
 - `package.json` nutzt `latest` für `vitest`, `@vitest/browser-playwright`, `@vitest/coverage-v8` und `playwright` – Builds sind dadurch nicht reproduzierbar (nur über `package-lock.json` abgefedert).
 - `.dockerignore` ist untracked: Der CI-Build klont das Repo und bekommt sie nicht.
+- `FieldSeparator` (shadcn) legt sein Label mit `bg-background` über die Linie. Auf anderem Untergrund (z. B. in einer Card im Dark Mode) entsteht dort ein sichtbarer Kasten. Könnte auf `Separator` mit Label umgestellt werden.
 - `Button` mit `icon` und `asChild` zusammen wirft einen Fehler (Radix `Slot` bekommt ein Array statt eines Elements). In KrabeUI selbst nutzt das bisher nichts.
