@@ -71,12 +71,26 @@ At minimum, override:
 | Token(s) | Controls |
 |---|---|
 | `--primary` / `--primary-foreground` | accent color + the text/icon color that sits on it |
-| `--radius` | corner rounding for every component (`--radius-sm/md/lg/xl` all derive from this one value) |
+| `--radius` | corner rounding for every component (`--radius-xs` … `--radius-4xl` all derive from this one value, see [Corner rounding](#corner-rounding)) |
 | `--background`, `--foreground`, `--card`, `--card-foreground`, `--popover`, `--popover-foreground`, `--secondary`, `--secondary-foreground`, `--muted`, `--muted-foreground`, `--accent`, `--accent-foreground`, `--border`, `--input`, `--ring` | the neutral surface ramp |
 
 `--destructive` and `--success` are also available if a project wants a different error/danger or success color than the default (`Badge` and `Alert` use them for their `destructive` and `success` variants).
 
 Values can be any valid CSS color — the default theme uses `oklch()`, but `hsl()`/`rgb()`/hex all work fine as raw custom-property values.
+
+### Corner rounding
+
+The project sets one value, `--radius`; KrabeUI only ever uses fractions of it, never fixed pixel values:
+
+| Class | Radius |
+|---|---|
+| `rounded-xs` | `--radius` × 0.4 |
+| `rounded-sm` | × 0.6 |
+| `rounded-md` | × 0.8 |
+| `rounded-lg` | × 1 |
+| `rounded-xl` … `rounded-4xl` | × 1.4 … 2.6 |
+
+`rounded-full` is used only for shapes that are round by design (switch, slider, radio button). Corners that are square by design stay square whatever `--radius` is — e.g. the right side of the selected entry in vertical `Tabs` and in `MasterDetail`, which reaches the divider towards the content.
 
 ### Fonts
 

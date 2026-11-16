@@ -54,7 +54,7 @@ function MasterDetail({
       <div
         data-slot="master-detail"
         className={cn(
-          "flex flex-col gap-4 md:grid md:grid-cols-[16rem_minmax(0,1fr)] md:items-start md:gap-6",
+          "flex flex-col gap-4 md:grid md:grid-cols-[16rem_minmax(0,1fr)] md:items-start md:gap-0",
           className
         )}
         {...props}
@@ -95,7 +95,10 @@ function MasterDetailList({ className, onKeyDown, ...props }: React.ComponentPro
       data-slot="master-detail-list"
       onKeyDown={handleKeyDown}
       className={cn(
-        "flex max-h-72 min-w-0 flex-col gap-1 overflow-y-auto overscroll-contain md:sticky md:top-4 md:max-h-[calc(100vh-2rem)]",
+        // The divider towards the details: below the list on narrow screens,
+        // on its right side next to them. MasterDetailContent draws the same
+        // line on its left, so it runs as far as the longer of the two.
+        "flex max-h-72 min-w-0 flex-col gap-1 overflow-y-auto overscroll-contain border-b pb-2 md:sticky md:top-4 md:max-h-[calc(100vh-2rem)] md:border-r md:border-b-0 md:pb-0",
         className
       )}
       {...props}
@@ -139,8 +142,10 @@ function MasterDetailItem({
         if (!event.defaultPrevented) select(value)
       }}
       className={cn(
-        "relative flex w-full shrink-0 items-start gap-2 rounded-md border border-transparent px-3 py-2 text-left text-sm text-foreground/60 transition-colors hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-muted data-[state=active]:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "after:absolute after:inset-y-1 after:left-0 after:w-0.5 after:rounded-full after:bg-foreground after:opacity-0 after:transition-opacity data-[state=active]:after:opacity-100",
+        // The selected entry gets a background and reaches the divider, so
+        // only its left corners are rounded (the right ones stay square
+        // whatever --radius is). Same look as vertical `TabsTrigger`.
+        "relative flex w-full shrink-0 items-start gap-2 rounded-l-md border border-transparent px-3 py-2 text-left text-sm text-foreground/60 transition-colors hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-muted data-[state=active]:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -178,7 +183,7 @@ function MasterDetailContent({ className, ...props }: React.ComponentProps<"div"
   return (
     <div
       data-slot="master-detail-content"
-      className={cn("min-w-0 space-y-4", className)}
+      className={cn("min-w-0 space-y-4 md:-ml-px md:border-l md:pl-6", className)}
       {...props}
     />
   )

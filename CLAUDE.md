@@ -147,3 +147,14 @@ Nicht jeden einzelnen Commit taggen – Tags markieren Feature-Meilensteine
 ## Sicherheit
 - Keine Secrets, Passwörter oder Tokens in Dateien oder Commits schreiben.
 - `.env`-Dateien und Zugangsdaten gehören in `.gitignore`.
+
+## Projektspezifisch
+- Rundungen nur als Anteil von `--radius`: `rounded-xs` … `rounded-4xl`
+  (Werte in `src/index.css`, Tabelle in der README unter „Corner
+  rounding“). Keine festen px-Werte, auch nicht als Obergrenze
+  (`min(…, 10px)`) oder Abzug (`calc(var(--radius) - 3px)`), und kein
+  bloßes `rounded` (in Tailwind fest 0.25rem). `rounded-full` nur für
+  Formen, die absichtlich rund sind.
+- Ecken, die nie gerundet sein sollen, ausdrücklich eckig setzen
+  (z. B. `rounded-l-md` ohne rechten Radius oder `rounded-r-none`). Sie
+  bleiben eckig, egal welchen `--radius` das Projekt setzt.
