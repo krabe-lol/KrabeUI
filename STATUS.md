@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.12.0` (Tag `v0.12.0`), Branch `main`.
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.13.0` (Tag `v0.13.0`), Branch `main`.
 - Ausgeliefert: 38 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.13.0 brachte: `Separator` mit optionalem Label in der Mitte (`<Separator>oder</Separator>`, horizontal und vertikal) und die fehlenden Separator-Stories. Ohne Label unverändert.
 - 0.12.0 brachte: `DialogFooter` ohne grauen Streifen (kein Hintergrund, keine Trennlinie, kein Eigen-Padding): nur noch die Button-Reihe. Sichtbare Änderung für alle Dialoge in Projekten, die auf 0.12.0 gehen.
 - 0.11.0 brachte: einheitlichen Look für vertikale Tabs und MasterDetail (Trennlinie, ausgewählter Eintrag `bg-muted`, rechts eckig) und Rundungen nur noch als Anteil von `--radius` (neues Token `--radius-xs`).
 - 0.10.0 brachte: FileTile im Querformat (Format-Icon links, Name und Typ/Größe in zwei Zeilen, Download-Button und Aktionen rechts) und eigene Icons für weitere Formate (Dokument, Tabelle, Präsentation, Archiv, Video, Audio).
