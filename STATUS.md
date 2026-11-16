@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.7.0` (Tag `v0.7.0`), Branch `main`.
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.8.0` (Tag `v0.8.0`), Branch `main`.
 - Ausgeliefert: 37 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.8.0 brachte: Select öffnet unter dem Trigger, zeigt höchstens 10,5 Einträge und hat optional eine Suche (`SelectContent searchable`). Sichtbare Änderung für alle Selects in Projekten, die auf 0.8.0 gehen.
 - 0.7.0 brachte: SignaturePad (`krabeui/signature-pad`, Eigenbau auf Canvas mit Pointer-Events, ohne neue Abhängigkeit) für die Unterschrift beim Lizenzantrag in Papierstau.
 - 0.6.0 brachte: aufklappbare Tabellenzeilen (`TableExpandableRow`, `TableExpandTrigger` in `krabeui/table`).
 - 0.5.0 brachte: MasterDetail (`krabeui/master-detail`, Eigenbau: Liste links, Details rechts) und Typography-Anpassungen.
@@ -16,6 +17,8 @@
 - Entscheiden, ob `docker-compose.yml` (lokaler Build) neben `stack.yml` (Registry-Image) bleibt; danach `docker-compose.yml` und `.dockerignore` einchecken oder verwerfen.
 
 ## Entscheidungen
+- Select öffnet standardmäßig unter dem Trigger (`position="popper"`). Radix' `item-aligned` setzt die Höhe selbst bis zum Fensterrand und rechnet ein Suchfeld über der Liste nicht ein, lässt sich also weder auf 10,5 Einträge begrenzen noch mit der Suche kombinieren.
+- Die Select-Suche blendet nicht passende Einträge nur aus (`hidden`) und unmountet sie nicht. So zeigt der Trigger den gewählten Wert weiter an, und Radix' Pfeiltasten-Navigation überspringt die ausgeblendeten Einträge. Radix setzt den Fokus beim Öffnen und beim Hover auf Einträge; Tippen holt ihn ins Suchfeld zurück (`handleSearchKeyDownCapture`).
 - SignaturePad exportiert immer schwarze Tinte auf Weiß (wie Papier), während beim Zeichnen die Theme-Farbe gilt: Das Bild ist ein Dokument und muss überall lesbar bleiben.
 - Accordion-Keyframes (`accordion-down`/`-up`) und `--animate-accordion-*` stehen selbst in `src/index.css`, statt sich auf `tw-animate-css` bzw. shadcns `tailwind.css` zu verlassen.
 - `optimizeDeps.include: ['expect-type']` im Storybook-Testprojekt (`vite.config.ts`): Ohne Vorbündeln des CommonJS-Pakets hing der Vitest-Browserlauf zeitweise, weil keine Testdatei `expectTypeOf` importieren konnte.
