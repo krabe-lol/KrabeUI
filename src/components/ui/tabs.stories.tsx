@@ -80,3 +80,32 @@ export const Default: Story = {
     </>
   ),
 }
+
+/** Horizontal tabs inside the content of vertical tabs keep their own orientation. */
+export const Nested: Story = {
+  render: () => (
+    <Tabs defaultValue="season" orientation="vertical" className="w-[36rem]">
+      <TabsList variant="line">
+        <TabsTrigger value="season">Season</TabsTrigger>
+        <TabsTrigger value="teams">Teams</TabsTrigger>
+      </TabsList>
+      <TabsContent value="season">
+        <Tabs defaultValue="classes">
+          <TabsList variant="line">
+            <TabsTrigger value="classes">Classes</TabsTrigger>
+            <TabsTrigger value="clubs">By club</TabsTrigger>
+          </TabsList>
+          <TabsContent value="classes">
+            <p className="text-sm text-muted-foreground">Classes content.</p>
+          </TabsContent>
+          <TabsContent value="clubs">
+            <p className="text-sm text-muted-foreground">Club content.</p>
+          </TabsContent>
+        </Tabs>
+      </TabsContent>
+      <TabsContent value="teams">
+        <p className="text-sm text-muted-foreground">Teams content.</p>
+      </TabsContent>
+    </Tabs>
+  ),
+}
