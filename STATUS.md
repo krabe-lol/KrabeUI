@@ -1,8 +1,9 @@
 # Status
 
 ## Aktueller Stand
-- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.14.1` (Tag `v0.14.1`), Branch `main`.
-- Ausgeliefert: 39 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- KrabeUI ist eine React-Komponentenbibliothek (shadcn/ui + Radix, Tailwind v4), die per Git-Tag als npm-Abhängigkeit eingebunden wird. Version `0.15.0` (Tag `v0.15.0`), Branch `main`.
+- Ausgeliefert: 40 Komponenten, jede mit eigenem `krabeui/<komponente>`-Subpath-Export und Storybook-Story (Liste in der README).
+- 0.15.0 brachte: `SideNav` / `SideNavItem` (`krabeui/side-nav`, Eigenbau): echte Link-Navigation (`<nav>`, `aria-current="page"`, `asChild` für Router-Links) im Look der vertikalen Tabs, für Untermenüs, bei denen jeder Punkt eine eigene Adresse hat.
 - 0.14.1 brachte: verschachtelte Tabs — horizontale Tabs im Inhalt vertikaler Tabs bleiben horizontal (Liste und Trigger richten sich nach der eigenen Ausrichtung).
 - 0.14.0 brachte: `PasswordInput` (`krabeui/password-input`, Eigenbau auf `InputGroup`): Passwortfeld mit Auge zum Anzeigen/Verbergen; Bildschirmleser-Texte per `showLabel`/`hideLabel` (Standard Englisch).
 - 0.13.0 brachte: `Separator` mit optionalem Label in der Mitte (`<Separator>oder</Separator>`, horizontal und vertikal) und die fehlenden Separator-Stories. Ohne Label unverändert.
