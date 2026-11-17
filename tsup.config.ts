@@ -24,6 +24,7 @@ export default defineConfig({
     combobox: "src/components/ui/combobox.tsx",
     empty: "src/components/ui/empty.tsx",
     "input-group": "src/components/ui/input-group.tsx",
+    "password-input": "src/components/ui/password-input.tsx",
     "radio-group": "src/components/ui/radio-group.tsx",
     toast: "src/components/ui/toast.tsx",
     spinner: "src/components/ui/spinner.tsx",
