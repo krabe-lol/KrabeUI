@@ -42,6 +42,7 @@ export default defineConfig({
     alert: "src/components/ui/alert.tsx",
     lightbox: "src/components/ui/lightbox.tsx",
     "master-detail": "src/components/ui/master-detail.tsx",
+    "side-nav": "src/components/ui/side-nav.tsx",
     utils: "src/lib/utils.ts",
   },
   format: ["esm"],
